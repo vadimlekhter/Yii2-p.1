@@ -1,15 +1,21 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $testService string */
 /* @var $describe string */
 /* @var $product \app\models\Product */
+
+use \yii\widgets\DetailView;
 
 $this->title = 'Test';
 ?>
 
+<?= $testService ?>
+
 <h1>Товар</h1>
 
 <?php
+echo '<br><br>';
 echo $describe;
 echo ': ';
 echo $product->name;
@@ -24,4 +30,4 @@ echo $product->price;
 echo '<br><br>';
 ?>
 
-<?= \yii\widgets\DetailView::widget(['model' => $product]) ?>
+<?= DetailView::widget(['model' => $product]) ?>
