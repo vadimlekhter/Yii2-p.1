@@ -1,7 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $testService string */
+/* @var $testServiceResult string */
 /* @var $describe string */
 /* @var $product \app\models\Product */
 
@@ -10,7 +10,7 @@ use \yii\widgets\DetailView;
 $this->title = 'Test';
 ?>
 
-<?= $testService ?>
+<?= $testServiceResult ?>
 
 <h1>Товар</h1>
 
@@ -24,9 +24,9 @@ echo $product->id;
 echo '<br><br>';
 echo $product->name;
 echo '<br><br>';
-echo $product->category;
-echo '<br><br>';
 echo $product->price;
+echo '<br><br>';
+echo $product->created_at;
 echo '<br><br>';
 ?>
 

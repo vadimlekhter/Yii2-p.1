@@ -55,7 +55,7 @@ $config = [
         ],
         'test' => [
             'class' => TestService::class,
-            'comp' => 'another TestService component'
+            'comp' => 'another TestService component2'
         ],
     ],
     'params' => $params,
