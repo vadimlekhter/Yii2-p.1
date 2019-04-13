@@ -1,14 +1,23 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $testServiceResult string */
-/* @var $describe string */
 /* @var $product \app\models\Product */
 
 use \yii\widgets\DetailView;
+use \yii\helpers\Html;
 
 $this->title = 'Test';
 ?>
+
+<div>
+<span>
+    <?= Html::a('Insert User', ['insert'], ['class' => 'btn btn-success']) ?>
+</span>
+
+<span>
+    <?= Html::a('Select User', ['select'], ['class' => 'btn btn-primary']) ?>
+</span>
+</div>
 
 <?= $testServiceResult ?>
 

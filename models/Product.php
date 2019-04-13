@@ -29,7 +29,7 @@ class Product extends \yii\db\ActiveRecord
     public function scenarios()
     {
         return [
-            self::SCENARIO_DEFAULT => ['name'],
+            self::SCENARIO_DEFAULT => ['name','price','created_at'],
             self::SCENARIO_CREATE => ['name', 'price', 'created_at'],
             self::SCENARIO_UPDATE => ['!name', 'price', 'created_at'],
         ];
@@ -45,10 +45,12 @@ class Product extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 20],
             //[['name'], 'filter', 'filter' => 'trim'],
             [['name'], 'trim'],
-            [['name'], function ($value)
-            {strip_tags($value);}],
+//            [['name'], 'filter', 'filter' => function ($value) {
+//                return strip_tags($value);
+//            }],
+            [['name'], 'filter', 'filter' => 'strip_tags'],
             [['created_at'], 'integer'],
-            [['price'], 'integer', 'min' => 0, 'max' => 1000],
+            [['price'], 'integer', 'min' => 1, 'max' => 999],
         ];
     }
 
