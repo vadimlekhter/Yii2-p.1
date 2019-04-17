@@ -43,6 +43,13 @@ $config = [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['view'],
+                    'logFile' => "@runtime/logs/view.log",
+                    'logVars' => []
+                ],
             ],
         ],
         'db' => $db,

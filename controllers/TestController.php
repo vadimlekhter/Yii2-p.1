@@ -67,32 +67,32 @@ class TestController extends Controller
     public function actionInsert()
     {
 
-        \Yii::$app->db->createCommand()->insert('user', ['username' => 'John Smith', 'password_hash' => 'shdhdbnd',
-            'creator_id' => 1, 'created_at' => 1])->execute();
+//        \Yii::$app->db->createCommand()->insert('user', ['username' => 'John Smith', 'password_hash' => 'shdhdbnd',
+//            'creator_id' => 1, 'created_at' => 1])->execute();
+//
+//        \Yii::$app->db->createCommand()->insert('user', ['username' => 'Mary White', 'password_hash' => 'shkljbnd',
+//            'creator_id' => 2, 'created_at' => 2])->execute();
+//
+//        \Yii::$app->db->createCommand()->insert('user', ['username' => 'Jack Black', 'password_hash' => 'shdcbbnd',
+//            'creator_id' => 3, 'created_at' => 3])->execute();
+//
+//        \Yii::$app->db->createCommand()->insert('user', ['username' => 'Ann Brown', 'password_hash' => 'shklmkod',
+//            'creator_id' => 4, 'created_at' => 4])->execute();
+//
+//        $query = new Query();
+//        $data = $query->from('user')->all();
+//
+//        \Yii::$app->db->createCommand()->batchInsert('task',
+//            ['title', 'description', 'creator_id', 'created_at'],
+//            [
+//                ['Task1', 'Wake Up', 1, 1],
+//                ['Task2', 'Have A Breakfast', 2, 2],
+//                ['Task3', 'Rest', 3, 3]
+//            ])->execute();
+//
+//        $query = new Query();
+//        $data = $query->from('user')->all();
 
-        \Yii::$app->db->createCommand()->insert('user', ['username' => 'Mary White', 'password_hash' => 'shkljbnd',
-            'creator_id' => 2, 'created_at' => 2])->execute();
-
-        \Yii::$app->db->createCommand()->insert('user', ['username' => 'Jack Black', 'password_hash' => 'shdcbbnd',
-            'creator_id' => 3, 'created_at' => 3])->execute();
-
-        \Yii::$app->db->createCommand()->insert('user', ['username' => 'Ann Brown', 'password_hash' => 'shklmkod',
-            'creator_id' => 4, 'created_at' => 4])->execute();
-
-        $query = new Query();
-        $data = $query->from('user')->all();
-
-        \Yii::$app->db->createCommand()->batchInsert('task',
-            ['title', 'description', 'creator_id', 'created_at'],
-            [
-                ['Task1', 'Wake Up', 1, 1],
-                ['Task2', 'Have A Breakfast', 2, 2],
-                ['Task3', 'Rest', 3, 3]
-            ])->execute();
-
-        $query = new Query();
-        $data = $query->from('user')->all();
-        
         $query = new Query();
         $data = $query->from('task')->all();
 
@@ -117,6 +117,8 @@ class TestController extends Controller
         $query = new Query();
         $data = $query->from('user')->innerJoin('task',
             'user.id=task.creator_id')->all();
+
+//        var_dump((new Query())->from('user')->all());
 
 
         return $this->render('select',
