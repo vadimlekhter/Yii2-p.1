@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "task".
@@ -19,6 +21,8 @@ use Yii;
  * @property User $updater
  * @property TaskUser[] $taskUsers
  * @property User[] $getAccessedUsers
+ *
+ * @mixin TimestampBehavior
  */
 class Task extends \yii\db\ActiveRecord
 {
@@ -41,7 +45,7 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'creator_id', 'created_at'], 'required'],
+            [['title', 'description'], 'required'],
             [['description'], 'string'],
             [['creator_id', 'updater_id', 'created_at', 'updated_at'], 'integer'],
             [['title'], 'string', 'max' => 255],
@@ -49,6 +53,22 @@ class Task extends \yii\db\ActiveRecord
             [['updater_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updater_id' => 'id']],
         ];
     }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+//                'updatedAtAttribute' => false
+            ],
+            [
+                'class' => BlameableBehavior::class,
+                'createdByAttribute' => 'creator_id',
+                'updatedByAttribute' => 'updater_id'
+            ]
+        ];
+    }
+
 
     /**
      * {@inheritdoc}
@@ -90,9 +110,9 @@ class Task extends \yii\db\ActiveRecord
         return $this->hasMany(TaskUser::className(), ['task_id' => 'id']);
     }
 
-    public function getAccessedUsers ()
+    public function getAccessedUsers()
     {
-        return $this->hasMany(User::className(), ['id'=>'user_id'])->via(self::RELATION_TASK_USERS);
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->via(self::RELATION_TASK_USERS);
     }
 
     /**

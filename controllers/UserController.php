@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\LoginForm;
 use app\models\Task;
 use Yii;
 use app\models\User;
@@ -9,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -27,12 +29,30 @@ class UserController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ]
         ];
     }
 
 
     public function actionTest()
     {
+        _end(LoginForm::$user2);
+
+//        $task = new Task();
+//        $task=Task::findOne(8);
+//        $task->title = 'Task7-2';
+//        $task->description = 'Task7_Description';
+//        $task->save();
+
+
 //        $user = new User();
 //
 //        $user->username = 'Mary White';
@@ -64,25 +84,39 @@ class UserController extends Controller
 
 //        $data = User::find()->with(User::RELATION_TASKS)->asArray()->all();
 
+//        $task = Task::findOne(2);
+//        $task->creator_id=2;
+//        $task->save();
+//        $task=Task::findOne(3);
+//        $task->creator_id=3;
+//        $task->save();
+//
+
+
+//        _end($task = Task::find()->with(Task::RELATION_CREATOR)->where(['=', 'id', 3])->asArray()->all());
+//        _end(User::find()->with(User::RELATION_TASKS)->asArray()->all());
+
 //        $data = User::find()->innerJoinWith(User::RELATION_TASKS)->asArray()->all();
 
 //        $task = Task::findOne(2);
+//       $data = $task->getAccessedUsers()->asArray()->all();
+
+//        $task = Task::findOne(2);
+//        $user = User::findOne(1);
+//
+//        $task->link(Task::RELATION_ACCESSED_USERS, $user);
+//
+//        $task = Task::findOne(2);
 //        $data = $task->getAccessedUsers()->asArray()->all();
 
-        $task = Task::findOne(2);
-        $user = User::findOne(1);
+//        $task = Task::findOne(3);
+//        $user = User::findOne(1);
+//        $task->link(Task::RELATION_ACCESSED_USERS, $user);
 
-        $task->link(Task::RELATION_ACCESSED_USERS, $user);
-
-        $task = Task::findOne(2);
-        $data = $task->getAccessedUsers()->asArray()->all();
-
-
-
-        return $this->render('test',
-            [
-                'data'=>$data
-            ]);
+//        return $this->render('test',
+//            [
+//                'data' => $data
+//            ]);
     }
 
     /**
@@ -122,6 +156,8 @@ class UserController extends Controller
     {
         $model = new User();
 
+        $model->setScenario(User::SCENARIO_CREATE);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -141,6 +177,8 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        $model->setScenario(User::SCENARIO_UPDATE);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

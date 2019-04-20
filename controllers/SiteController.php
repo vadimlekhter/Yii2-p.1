@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\IdentityInterface;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -93,8 +95,10 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        $username = Yii::$app->user->identity->username;
         Yii::$app->user->logout();
-
+        \Yii::info(['message' => "Выполнен выход из системы c логином $username", 'level' => 'info'],
+            'logout');
         return $this->goHome();
     }
 

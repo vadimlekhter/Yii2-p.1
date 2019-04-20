@@ -50,6 +50,20 @@ $config = [
                     'logFile' => "@runtime/logs/view.log",
                     'logVars' => []
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['login'],
+                    'logFile' => "@runtime/logs/login.log",
+                    'logVars' => []
+                ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['logout'],
+                    'logFile' => "@runtime/logs/logout.log",
+                    'logVars' => []
+                ]
             ],
         ],
         'db' => $db,
