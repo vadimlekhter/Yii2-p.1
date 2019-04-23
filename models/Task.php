@@ -59,7 +59,6 @@ class Task extends \yii\db\ActiveRecord
         return [
             [
                 'class' => TimestampBehavior::class,
-//                'updatedAtAttribute' => false
             ],
             [
                 'class' => BlameableBehavior::class,

@@ -4,15 +4,18 @@ namespace app\models\query;
 
 /**
  * This is the ActiveQuery class for [[\app\models\Task]].
- *
  * @see \app\models\Task
  */
 class TaskQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    /**
+     * @param $userId
+     * @return TaskQuery
+     */
+    public function byCreator($userId)
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->andWhere(['creator_id'=> $userId]);
+    }
 
     /**
      * {@inheritdoc}

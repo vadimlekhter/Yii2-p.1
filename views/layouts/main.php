@@ -39,10 +39,10 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'My Tasks', 'url' => ['/task/my']],
+            ['label' => 'New Task', 'url' => ['/task/create']],
             ['label' => 'User', 'url' => ['/user/index']],
-            ['label' => 'Task', 'url' => ['/task/index']],
+            ['label' => 'Task', 'url' => ['/task/my']],
             ['label' => 'TaskUser', 'url' => ['/task-user/index']],
             ['label' => 'Test', 'url' => ['/test/index']],
             Yii::$app->user->isGuest ? (

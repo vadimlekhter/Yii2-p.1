@@ -96,9 +96,10 @@ class SiteController extends Controller
     public function actionLogout()
     {
         $username = Yii::$app->user->identity->username;
-        Yii::$app->user->logout();
-        \Yii::info(['message' => "Выполнен выход из системы c логином $username", 'level' => 'info'],
-            'logout');
+        if (Yii::$app->user->logout()) {
+            \Yii::info(['message' => "Выполнен выход из системы c логином $username", 'level' => 'info'],
+                'logout');
+        }
         return $this->goHome();
     }
 

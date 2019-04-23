@@ -2,12 +2,16 @@
 
 namespace app\controllers;
 
+use app\models\Task;
+use app\models\User;
 use Yii;
 use app\models\TaskUser;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * TaskUserController implements the CRUD actions for TaskUser model.
@@ -68,19 +72,41 @@ class TaskUserController extends Controller
 
     /**
      * Creates a new TaskUser model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * If creation is successful, the browser will be redirected to the 'task/my' page.
+     * @taskId integer
+     * @throws ForbiddenHttpException not this user task exception
+     * @throws NotFoundHttpException not found task exception
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($taskId)
     {
+        $model = Task::findOne($taskId);
+
+        if ($model==null) {
+            throw new NotFoundHttpException();
+        }
+
+        if ($model->creator_id !== \Yii::$app->user->id) {
+            throw new ForbiddenHttpException();
+        }
+
         $model = new TaskUser();
 
+        $model->task_id=$taskId;
+
+        $users = User::find()->where(['<>', 'id', \Yii::$app->user->id])
+            ->select('username')
+            ->indexBy('id')
+            ->column();
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            Yii::$app->session->setFlash('success','New access to task created');
+            return $this->redirect(['task/my', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'users' => $users,
         ]);
     }
 

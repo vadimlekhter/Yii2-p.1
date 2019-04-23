@@ -64,19 +64,20 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password'], 'required'],
+            [['username', 'password'], 'required', 'on' => User::SCENARIO_CREATE],
+            [['username'], 'required', 'on' => User::SCENARIO_UPDATE],
             [['creator_id', 'updater_id', 'created_at', 'updated_at'], 'integer'],
             [['username', 'auth_key'], 'string', 'max' => 255],
         ];
     }
 
-    public function scenarios()
-    {
-        return [
-            self::SCENARIO_CREATE => ['username', 'password'],
-            self::SCENARIO_UPDATE => ['username'],
-        ];
-    }
+//    public function scenarios()
+//    {
+//        return [
+//            self::SCENARIO_CREATE => ['username', 'password'],
+//            self::SCENARIO_UPDATE => ['username'],
+//        ];
+//    }
 
     public function behaviors()
     {
