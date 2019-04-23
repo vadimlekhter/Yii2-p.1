@@ -49,7 +49,7 @@ class TaskUserController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => TaskUser::find(),
+            'query' => TaskUser::find()->orderBy('task_id'),
         ]);
 
         return $this->render('index', [
