@@ -72,6 +72,11 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+//                \yii\web\UrlManager::
+                '<controller:[\w-]+>s' => '<controller>/index',
+                '<controller:[\w-]+>/<id:\d+>' => '<controller>/view',
+                '<controller:[\w-]+>/update/<id:\d+>' => '<controller>/update',
+                '<controller:[\w-]+>/delete/<id:\d+>' => '<controller>/delete',
             ],
         ],
         'test' => [

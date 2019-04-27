@@ -44,8 +44,11 @@ class UserController extends Controller
 
     public function actionTest()
     {
-        $user = new User;
-        $user->delete();
+//        _end(\Yii::$aliases);
+//        _end(\yii\helpers\Url::toRoute(['task/view', 'id'=>1]));
+//        _end(\yii\helpers\Url::to(['user/view', 'id'=>1], true));
+//        $user = new User;
+//        $user->delete();
 //        $task = new Task();
 //        $task=Task::findOne(8);
 //        $task->title = 'Task7-2';
@@ -159,6 +162,7 @@ class UserController extends Controller
         $model->setScenario(User::SCENARIO_CREATE);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'New user created');
             return $this->redirect(['index', 'id' => $model->id]);
         }
 
@@ -181,6 +185,7 @@ class UserController extends Controller
         $model->setScenario(User::SCENARIO_UPDATE);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'User updated');
             return $this->redirect(['index', 'id' => $model->id]);
         }
 
@@ -199,7 +204,7 @@ class UserController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
+        Yii::$app->session->setFlash('success', 'User deleted');
         return $this->redirect(['index']);
     }
 
