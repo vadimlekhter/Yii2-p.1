@@ -87,14 +87,20 @@ class TaskUserController extends Controller
      * Deletes an existing TaskUser model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
+     * @param integer $task_id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $task_id)
     {
-        $this->findModel($id)->delete();
+        $creator_id = Task::find()->where(['id' => $task_id])->select('creator_id')->column();
 
-        return $this->redirect(['index']);
+        if (in_array(\Yii::$app->user->id, $creator_id)) {
+            $this->findModel($id)->delete();
+            Yii::$app->session->setFlash('success', 'User unlinked');
+        }
+
+        return $this->redirect(["task/$task_id"]);
     }
 
     /**

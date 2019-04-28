@@ -19,10 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-//            ['class' => 'yii\grid\SerialColumn'],
-
-//            'id',
-//            'title',
             [
                 'attribute' => 'title',
                 'format' => 'html',
@@ -36,12 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function (app\models\Task $model) {
                     return join(', ', $model->getAccessedUsers()->select('username')->column());
                 }],
-//            'creator_id',
-//            'updater_id',
-//            'created_at:datetime',
-//            'updated_at:datetime',
-
-//            ['class' => 'yii\grid\ActionColumn'],
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete} {unshare}',
                 'buttons' => [

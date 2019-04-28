@@ -105,15 +105,23 @@ class TaskController extends Controller
         $model = $this->findModel($id);
 
         $sharedUsers = TaskUser::find()
-            ->where(['=','task_id', $id])->select('user_id')->column();
-//        _end($sharedUsers);
+            ->where(['=', 'task_id', $id])->select('user_id')->column();
 
         if ($model->creator_id !== \Yii::$app->user->id && !in_array(\Yii::$app->user->id, $sharedUsers)) {
             throw new ForbiddenHttpException();
         }
 
+        if ($model->creator_id == \Yii::$app->user->id) {
+            $dataProvider = new ActiveDataProvider([
+                'query' => TaskUser::find()->with(TaskUser::RELATION_USER)
+                    ->where(['task_user.task_id' => $id])->select('*')
+
+            ]);
+        }
+
         return $this->render('view', [
             'model' => $model,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
