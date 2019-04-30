@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
@@ -27,12 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-//            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'username',
-            'password_hash',
-            'auth_key',
             'creator_id',
 
             ['class' => 'yii\grid\ActionColumn'],

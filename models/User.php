@@ -71,13 +71,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         ];
     }
 
-//    public function scenarios()
-//    {
-//        return [
-//            self::SCENARIO_CREATE => ['username', 'password'],
-//            self::SCENARIO_UPDATE => ['username'],
-//        ];
-//    }
 
     public function behaviors()
     {

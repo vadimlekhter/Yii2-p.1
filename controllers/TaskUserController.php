@@ -6,7 +6,6 @@ use app\models\Task;
 use app\models\User;
 use Yii;
 use app\models\TaskUser;
-use yii\base\ErrorException;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;

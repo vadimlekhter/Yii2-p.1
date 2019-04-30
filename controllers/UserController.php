@@ -2,8 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\LoginForm;
-use app\models\Task;
 use Yii;
 use app\models\User;
 use yii\data\ActiveDataProvider;
