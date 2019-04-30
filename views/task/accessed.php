@@ -33,8 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'Username',
                 'format' => 'html',
                 'value' => function (app\models\Task $model) {
-                    $user = (int)$model->getCreator()->select('id')->column()[0][0];
-                    $username = User::find()->select('username')->where(['id'=>$user])->asArray()->all()[0]['username'];
+                    $user = $model->creator_id;
+                    $username = $model->creator->username;
                     return Html::a($username, ['user/view', 'id' => $user], ['class' => 'btn']);
                 }
             ],

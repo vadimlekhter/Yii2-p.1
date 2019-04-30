@@ -6,7 +6,7 @@ use app\models\Task;
 use app\models\User;
 use Yii;
 use app\models\TaskUser;
-use yii\data\ActiveDataProvider;
+use yii\base\ErrorException;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
@@ -87,20 +87,28 @@ class TaskUserController extends Controller
      * Deletes an existing TaskUser model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
-     * @param integer $task_id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws ForbiddenHttpException if the user is not creator of the task
+     * @throws ErrorException if the model cannot be deleted
      */
-    public function actionDelete($id, $task_id)
-    {
-        $creator_id = Task::find()->where(['id' => $task_id])->select('creator_id')->column();
 
-        if (in_array(\Yii::$app->user->id, $creator_id)) {
-            $this->findModel($id)->delete();
-            Yii::$app->session->setFlash('success', 'User unlinked');
+    public function actionDelete($id)
+    {
+        $model = $this->findModel($id);
+
+        $task_id = $model->task_id;
+
+        $creator_id = $model->task->creator_id;
+
+        if (\Yii::$app->user->id !== $creator_id) {
+            throw new ForbiddenHttpException('You are not creator of the task!');
         }
 
-        return $this->redirect(["task/$task_id"]);
+        $model->delete();
+        Yii::$app->session->setFlash('success', 'User unlinked');
+        
+        return $this->redirect(['task/view', 'id' => $task_id]);
     }
 
     /**

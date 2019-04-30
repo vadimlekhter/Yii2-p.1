@@ -20,7 +20,7 @@ use yii\behaviors\TimestampBehavior;
  * @property User $creator
  * @property User $updater
  * @property TaskUser[] $taskUsers
- * @property User[] $getAccessedUsers
+ * @property User[] $AccessedUsers
  *
  * @mixin TimestampBehavior
  */
