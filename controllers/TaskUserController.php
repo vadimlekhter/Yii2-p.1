@@ -63,11 +63,15 @@ class TaskUserController extends Controller
             throw new ForbiddenHttpException();
         }
 
+        $yetSharedUsers = TaskUser::find()->where(['task_id'=>$taskId])->select('user_id')->asArray()->column();
+
         $model = new TaskUser();
 
         $model->task_id = $taskId;
 
-        $users = User::find()->where(['<>', 'id', \Yii::$app->user->id])
+
+
+        $users = User::find()->where(['<>', 'id', \Yii::$app->user->id])->andWhere(['not in', 'id', $yetSharedUsers])
             ->select('username')
             ->indexBy('id')
             ->column();
