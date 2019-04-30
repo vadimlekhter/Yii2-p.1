@@ -94,7 +94,6 @@ class TaskUserController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      * @throws ForbiddenHttpException if the user is not creator of the task
-     * @throws ErrorException if the model cannot be deleted
      */
 
     public function actionDelete($id)
