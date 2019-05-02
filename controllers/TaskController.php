@@ -6,6 +6,7 @@ use app\models\TaskUser;
 use Yii;
 use app\models\Task;
 use yii\data\ActiveDataProvider;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
@@ -103,13 +104,18 @@ class TaskController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+//        $isSharedUser = TaskUser::find()
+//            ->select('user_id')
+//            ->where(['task_id'=>$id])
+//            ->andWhere(['user_id'=>\Yii::$app->user->id])
+//            ->exists();
 
-        $sharedUsers = array();
-        foreach ($model->taskUsers as $user) {
-            array_push($sharedUsers, $user->user_id);
-        }
+        $isSharedUser = $model
+            ->getTaskUsers()
+            ->select(['task_id'=>'id'])
+            ->where(['user_id'=>\Yii::$app->user->id])->exists();
 
-        if ($model->creator_id !== \Yii::$app->user->id && !in_array(\Yii::$app->user->id, $sharedUsers)) {
+        if ($model->creator_id !== \Yii::$app->user->id && !$isSharedUser) {
             throw new ForbiddenHttpException();
         }
 

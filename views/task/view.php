@@ -55,7 +55,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'buttons' => [
                         'delete' => function ($url, $model, $id) {
                             $icon = \yii\bootstrap\Html::icon('remove');
-//                            return Html::a($icon, ['task-user/delete', 'id' => $model->id, 'task_id' => $model->task_id], [
                             return Html::a($icon, ['task-user/delete', 'id' => $model->id], [
                                 'data' => [
                                     'confirm' => 'Are you sure you want to unshare this user?',
