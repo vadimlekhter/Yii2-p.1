@@ -112,7 +112,6 @@ class TaskController extends Controller
 
         $isSharedUser = $model
             ->getTaskUsers()
-            ->select(['task_id'=>'id'])
             ->where(['user_id'=>\Yii::$app->user->id])->exists();
 
         if ($model->creator_id !== \Yii::$app->user->id && !$isSharedUser) {
