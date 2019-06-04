@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //                    return join(', ', $model->getAccessedUsers()->select('username')->column());
                     $sharedUsers = array();
                     foreach ($model->getAccessedUsers()->select(['username', 'id'])->asArray()->all() as $user) {
-                        array_push($sharedUsers, Html::a($user['username'], ['user/view', 'id' => $user['id']]));
+                        array_push($sharedUsers, Html::a($user['username'], ['user/view', 'id' => $user->id]));
                     };
                     return join(', ', $sharedUsers);
                 },
