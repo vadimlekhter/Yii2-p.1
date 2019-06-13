@@ -39,8 +39,11 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'My Tasks', 'url' => ['/task/my']],
+            ['label' => 'Shared Tasks', 'url' => ['/task/shared']],
+            ['label' => 'Accessed Tasks', 'url' => ['/task/accessed']],
+            ['label' => 'New Task', 'url' => ['/task/create']],
+            ['label' => 'Users', 'url' => ['/user/index']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

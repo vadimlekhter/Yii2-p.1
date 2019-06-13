@@ -19,7 +19,6 @@ class LoginForm extends Model
 
     private $_user = false;
 
-
     /**
      * @return array the validation rules.
      */
@@ -46,7 +45,6 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-
             if (!$user || !$user->validatePassword($this->password)) {
                 $this->addError($attribute, 'Incorrect username or password.');
             }
@@ -60,7 +58,12 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+            $loginstatus = Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
+            if ($loginstatus) {
+                \Yii::info(['message' => "Выполнен вход в систему c логином $this->username", 'level' => 'info'],
+                    'login');
+            }
+            return $loginstatus;
         }
         return false;
     }

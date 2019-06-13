@@ -1,15 +1,18 @@
 <?php
 
+use app\components\TestService;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
+    'language' => 'ru',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'components' => [
         'request' => [
@@ -40,6 +43,27 @@ $config = [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['view'],
+                    'logFile' => "@runtime/logs/view.log",
+                    'logVars' => []
+                ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['login'],
+                    'logFile' => "@runtime/logs/login.log",
+                    'logVars' => []
+                ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['logout'],
+                    'logFile' => "@runtime/logs/logout.log",
+                    'logVars' => []
+                ]
             ],
         ],
         'db' => $db,
@@ -48,9 +72,16 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<controller:[\w-]+>s' => '<controller>/index',
+                '<controller:[\w-]+>/<id:\d+>' => '<controller>/view',
+                '<controller:[\w-]+>/update/<id:\d+>' => '<controller>/update',
+                '<controller:[\w-]+>/delete/<id:\d+>' => '<controller>/delete',
             ],
         ],
-
+        'test' => [
+            'class' => TestService::class,
+            'comp' => 'another TestService component2'
+        ],
     ],
     'params' => $params,
 ];
@@ -61,14 +92,14 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['*', '::1'],
     ];
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['*', '::1'],
     ];
 }
 
