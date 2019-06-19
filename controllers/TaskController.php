@@ -195,6 +195,7 @@ class TaskController extends Controller
             throw new ForbiddenHttpException();
         }
 
+        $model->unlinkAll('taskUsers', true);
         $model->delete();
         Yii::$app->session->setFlash('success', 'Task deleted');
         return $this->redirect(['my']);
