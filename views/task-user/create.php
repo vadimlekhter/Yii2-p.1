@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $users array */
 /* @var $model app\models\TaskUser */
 
-$this->title = 'Create Task User';
+$this->title = 'Share Task';
 $this->params['breadcrumbs'][] = ['label' => 'Task Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
